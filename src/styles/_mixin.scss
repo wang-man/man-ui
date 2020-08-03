@@ -1,0 +1,24 @@
+// 不同尺寸button的差异化样式
+@mixin button-size($padding-x, $padding-y, $font-size, $border-radius){
+  padding: $padding-y, $padding-x;
+  font-size: $font-size;
+  border-radius: $border-radius;
+}
+// 不同类型button的差异化样式
+@mixin button-color(
+  $color,
+  $background,
+  $border,
+  $hover-color: $color,
+  $hover-background: lighten($background, 7.5%),    // 默认参数
+  $hover-border: lighten($border, 10%)
+) {
+  color: $color;
+  background: $background;
+  border-color: $border;
+  &:hover, &:focus{
+    color: $hover-color;
+    background: $hover-background;
+    border-color: $hover-border;
+  }
+}

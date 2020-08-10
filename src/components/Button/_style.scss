@@ -1,3 +1,4 @@
+// 本scss文件可以直接使用src/styles/_variable.scss中的变量的原因是他们都被共同导入src/styles/index.scss中，因此可看作它们进入同一个文件了，变量就可以互相引用。
 .btn{
   position: relative;
   display: inline-block;

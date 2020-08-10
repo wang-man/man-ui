@@ -18,7 +18,7 @@ a{
 // @import "animation";
 // // button
 
-@import "../components/Button/style";
+@import "../components/Button/style";  // 导入的button的样式文件也是带下划线的，这些样式都变成块进入本scss文件
 
 // // menu
 

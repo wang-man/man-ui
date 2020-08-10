@@ -24,8 +24,8 @@ interface BaseButtonProps {
   href?: string
 }
 
-type NativeButtonProps = BaseButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>
-type AnchorButtonProps = BaseButtonProps & React.AnchorHTMLAttributes<HTMLAnchorElement>
+type NativeButtonProps = BaseButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>  // 与button元素原生属性组合
+type AnchorButtonProps = BaseButtonProps & React.AnchorHTMLAttributes<HTMLAnchorElement>  // 与a元素原生属性组合
 export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>
 
 const Button: React.FC<ButtonProps> = props =>{
@@ -38,6 +38,8 @@ const Button: React.FC<ButtonProps> = props =>{
     href,
     ...resetProps     // 取出其他props
   } = props
+
+  console.log('props---', props);
 
   const classes = classnames('btn', className, {
     [`btn-${btnType}`]: btnType,

@@ -1,0 +1,74 @@
+// 本scss文件可以直接使用src/styles/_variable.scss中的变量的原因是他们都被共同导入src/styles/index.scss中，因此可看作它们进入同一个文件了，变量就可以互相引用。
+.btn {
+  position: relative;
+  display: inline-block;
+  font-weight: $btn-font-weight;
+  line-height: $btn-line-height;
+  color: $body-color;
+  outline: none;
+  white-space: nowrap;
+  text-align: center;
+  vertical-align: middle;
+  background-image: none;
+  border: $btn-border-width solid transparent;
+  @include button-size($btn-padding-x, $btn-padding-y, $btn-font-size, $btn-border-radius);
+  box-shadow: $btn-box-shadow;
+  cursor: pointer;
+  transition: $btn-transition;
+
+  &.disabled,
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: $btn-disabled-opacity;
+    box-shadow: none;
+    pointer-events: none;
+
+    >* {
+      pointer-events: none;
+    }
+  }
+
+  &:focus {
+    outline: none;
+
+  }
+}
+
+.btn-lg {
+  @include button-size($btn-padding-x-lg, $btn-padding-y-lg, $btn-font-size-lg, $btn-border-radius-lg)
+}
+
+.btn-sm {
+  @include button-size($btn-padding-x-sm, $btn-padding-y-sm, $btn-font-size-sm, $btn-border-radius-sm)
+}
+
+.btn-default {
+  @include button-color($dark, $light, $light, $dark, $gray-200, $gray-200)
+}
+
+.btn-primary {
+  @include button-color($white, $primary, $primary)
+}
+
+.btn-danger {
+  @include button-color($white, $danger, $danger)
+}
+
+.btn-link {
+  color: $btn-link-color !important;
+  box-shadow: none;
+  text-decoration: $link-decoration !important;
+
+  &:hover,
+  &:focus {
+    color: $btn-link-hover-color !important;
+    text-decoration: $link-hover-decoration !important;
+  }
+
+  &.disabled,
+  &:disabled {
+    color: $btn-link-disabled-color;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+}

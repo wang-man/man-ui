@@ -1,0 +1,66 @@
+// 不同尺寸button的差异化样式
+@mixin button-size($padding-x, $padding-y, $font-size, $border-radius) {
+  padding: $padding-y, $padding-x;
+  font-size: $font-size;
+  border-radius: $border-radius;
+}
+
+// 不同类型button的差异化样式
+@mixin button-color($color,
+  $background,
+  $border,
+  $hover-color: $color,
+  $hover-background: lighten($background, 7.5%), // 默认参数
+
+  $hover-border: lighten($border, 10%)) {
+  color: $color;
+  background: $background;
+  border-color: $border;
+
+  &:hover,
+  &:focus {
+    color: $hover-color;
+    background: $hover-background;
+    border-color: $hover-border;
+  }
+}
+
+@mixin zoom-animation($direction: 'top',
+  $scaleStart: scaleY(0),
+  $scaleEnd: scaleY(1),
+  $origin: center top,
+  $time: 300ms,
+  $delay: 0ms) {
+  .zoom-in-#{$direction}-enter {
+    opacity: 0;
+    transform: $scaleStart;
+  }
+
+  .zoom-in-#{$direction}-enter-active {
+    opacity: 1;
+    transform: $scaleEnd;
+    transition: transform $time cubic-bezier(0.23, 1, 0.32, 1) $delay, opacity $time cubic-bezier(0.23, 1, 0.32, 1) $delay;
+    transform-origin: $origin
+  }
+
+  .zoom-in-#{$direction}-exit {
+    opacity: 1;
+  }
+
+  .zoom-in-#{$direction}-exit-active {
+    opacity: 0;
+    transform: $scaleStart;
+    transition: transform $time cubic-bezier(0.23, 1, 0.32, 1) $delay, opacity $time cubic-bezier(0.23, 1, 0.32, 1) $delay;
+    transform-origin: $origin;
+  }
+}
+
+@mixin border-right-radius($raduis) {
+  border-top-right-radius: $raduis;
+  border-bottom-right-radius: $raduis;
+}
+
+@mixin border-left-radius($raduis) {
+  border-top-left-radius: $raduis;
+  border-bottom-left-radius: $raduis;
+}

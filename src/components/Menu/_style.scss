@@ -1,0 +1,175 @@
+.man-menu {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 30px;
+  list-style: none;
+  border-bottom: $menu-border-width solid $menu-border-color;
+  box-shadow: $menu-box-shadow;
+
+  >.man-menu-item {
+    padding: $menu-item-padding-y $menu-item-padding-x;
+    cursor: pointer;
+    transition: $menu-transition;
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+
+    &.is-disabled {
+      color: $menu-item-disabled-color;
+      pointer-events: none;
+      cursor: default;
+    }
+
+    &.is-active {
+      color: $menu-item-active-color;
+      border-bottom: $menu-item-active-border-width solid $menu-item-active-color;
+    }
+
+    &:hover {
+      color: $menu-item-active-color;
+    }
+  }
+
+  .submenu-item {
+    position: relative;
+
+    .submenu-title {
+      display: flex;
+      align-items: center;
+    }
+
+    .chevron-icon {
+      transition: transform .25s ease-in-out;
+      margin-left: 3px;
+      margin-top: 3px;
+    }
+
+    &:hover {
+      .chevron-icon {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .is-vertical {
+    .chevron-icon {
+      transform: rotate(0deg) !important;
+    }
+  }
+
+  .is-vertical.is-opened {
+    .chevron-icon {
+      transform: rotate(180deg) !important;
+    }
+  }
+
+  .man-submenu {
+    // display: none;
+    list-style: none;
+    padding-left: 0;
+    white-space: nowrap;
+
+    //transition: $menu-transition;
+    .man-menu-item {
+      padding: $menu-item-padding-y $menu-item-padding-x;
+      cursor: pointer;
+      transition: $menu-transition;
+      color: $body-color;
+
+      &.is-active,
+      &:hover {
+        color: $menu-item-active-color !important;
+      }
+    }
+  }
+
+  .man-submenu.menu-opened {
+    // display: block;
+  }
+
+
+  /*入场动画开始*/
+  .fade-enter {
+    opacity: 0;
+  }
+
+  /*入场动画过程*/
+  .fade-enter-active {
+    opacity: 1;
+    transition: opacity 0.2s ease-in;
+  }
+
+  /*入场动画结束*/
+  .fade-enter-done {
+    opacity: 1;
+  }
+
+  /*离场动画开始*/
+  .fade-exit {
+    opacity: 1;
+  }
+
+  /*离场动画过程*/
+  .fade-exit-active {
+    opacity: 0;
+    transition: opacity 0.2s ease-in;
+  }
+
+  /*离场动画结束*/
+  .fade-exit-done {
+    opacity: 0;
+  }
+
+  /*页面第一次加载时的开始状态*/
+  .fade-appear {
+    opacity: 0;
+  }
+
+  /*页面第一次加载时的动画过程*/
+  .fade-appear-active {
+    opacity: 1;
+    transition: opacity 0.2s ease-in;
+  }
+}
+
+.man-menu-horizontal {
+  >.menu-item {
+    border-bottom: $menu-item-active-border-width solid transparent;
+  }
+
+  .man-submenu {
+    position: absolute;
+    background: $white;
+    z-index: 100;
+    top: 100%;
+    left: 0;
+    border: $menu-border-width solid $menu-border-color;
+    box-shadow: $submenu-box-shadow;
+  }
+}
+
+.man-menu-vertical {
+  flex-direction: column;
+  border-bottom: 0px;
+  margin: 10px 20px;
+  border-right: $menu-border-width solid $menu-border-color;
+
+  >.man-menu-item {
+    border-left: $menu-item-active-border-width solid transparent;
+
+    &.is-active {
+      border-bottom: 0px;
+      border-left: $menu-item-active-border-width solid $menu-item-active-color;
+    }
+
+    .man-menu-item {
+
+      &.is-active {
+        border-left: $menu-item-active-border-width solid $menu-item-active-color;
+      }
+    }
+  }
+}

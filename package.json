@@ -30,8 +30,8 @@
     "eject": "react-scripts eject",
     "build-ts": "tsc -p tsconfig.build.json",
     "build-css": "node-sass ./src/styles/index.scss ./dist/index.css",
-    "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
     "prepublishOnly": "npm run lint && npm run build"
   },
   "husky": {
@@ -76,15 +76,21 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@storybook/addon-actions": "^6.3.12",
+    "@storybook/addon-essentials": "^6.3.12",
+    "@storybook/addon-links": "^6.3.12",
+    "@storybook/react": "^6.3.12",
     "@types/classnames": "^2.3.1",
     "@types/react-transition-group": "^4.4.4",
+    "babel-loader": "^8.2.3",
     "cross-env": "^7.0.3",
     "husky": "^7.0.4",
     "node-sass": "^6.0.1",
-    "rimraf": "^3.0.2",
-    "sass-loader": "^12.3.0",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "rimraf": "^3.0.2",
+    "sass-loader": "^12.3.0"
   },
   "peerDependencies": {
     "react": ">=16.8.0",

@@ -10,7 +10,8 @@ interface BaseButtonProps {
   size?: ButtonSize,
   btnType?: ButtonType,
   children: React.ReactNode,
-  href?: string
+  href?: string,
+  backgroundColor?: string;
 }
 
 type ButtonProps = BaseButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>  // 与button元素原生属性组合
@@ -25,6 +26,7 @@ const Button: React.FC<CombineButtonProps> = props => {
     size,
     children,
     href,
+    backgroundColor,
     ...resetProps     // 取出其他props
   } = props
 
@@ -40,7 +42,7 @@ const Button: React.FC<CombineButtonProps> = props => {
     )
   } else {
     return (
-      <button disabled={disabled} className={classes} {...resetProps}>{children}</button>
+      <button disabled={disabled} className={classes} {...resetProps} style={{ backgroundColor }}>{children}</button>
     )
   }
 }

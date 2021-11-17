@@ -86,11 +86,11 @@
     "babel-loader": "^8.2.3",
     "cross-env": "^7.0.3",
     "husky": "^7.0.4",
-    "node-sass": "^6.0.1",
+    "node-sass": "4.14.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "rimraf": "^3.0.2",
-    "sass-loader": "^12.3.0"
+    "sass-loader": "7.3.1"
   },
   "peerDependencies": {
     "react": ">=16.8.0",

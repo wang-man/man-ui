@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import Icon from '../Icon/icon'
 
-type InputSize = 'lg' | 'sm'
+export type InputSize = 'lg' | 'sm'
 export interface InputProps extends Omit<InputHTMLAttributes<HTMLElement>, 'size'> {
   /**是否禁用 Input */
   disabled?: boolean;

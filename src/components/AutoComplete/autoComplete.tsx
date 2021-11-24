@@ -1,4 +1,4 @@
-import React, { FC, useState, useRef, ChangeEvent, KeyboardEvent, ReactElement, useEffect } from "react";
+import React, { FC, useState, useRef, ChangeEvent, FocusEvent, KeyboardEvent, ReactElement, useEffect } from "react";
 import classnames from 'classnames';
 import Icon from "../Icon/icon";
 import Input, { InputProps } from "../Input/input";
@@ -12,7 +12,7 @@ export interface DataSourceObject {
 // export type DataSourceType<T = {}> = T & DataSourceObject;
 
 
-interface AutoCompleteProps extends Omit<InputProps, 'onSelect'> {
+export interface AutoCompleteProps extends Omit<InputProps, 'onSelect'> {
   fetchSuggestions: (str: string) => DataSourceObject[] | Promise<DataSourceObject[]>;
   onSelect?: (item: DataSourceObject) => void
   renderOption?: (item: DataSourceObject, index: number) => ReactElement
@@ -24,22 +24,25 @@ const AutoComplete: FC<AutoCompleteProps> = props => {
     onSelect,
     renderOption,
     value,
+    disabled,
     ...restProps
   } = props;
 
   const [suggestions, setSuggestions] = useState<DataSourceObject[]>([]);
   const [inputValue, setInputValue] = useState(value as string);
   const [uploading, setUploading] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
   const [highLightIndex, setHighLightIndex] = useState(0);
   const triggerSearch = useRef(false);
   const autoCompleteRef = useRef<HTMLDivElement>(null);
   const debounceValue = useDebounce(inputValue, 1000);
   useClickOut(autoCompleteRef, () => {
-    setSuggestions([]);
+    setShowDropdown(false);
   })
 
   useEffect(() => {
     if (debounceValue && triggerSearch.current) {
+      setShowDropdown(true);
       const results = fetchSuggestions(debounceValue);
       if (results instanceof Promise) {
         results.then(data => {
@@ -52,11 +55,18 @@ const AutoComplete: FC<AutoCompleteProps> = props => {
     } else {
       setSuggestions([]);
     }
+    setUploading(false);
   }, [debounceValue])
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     triggerSearch.current = true;
     setUploading(true);
+    const value = e.target.value.trim();
+    setInputValue(value);
+  }
+  const handleFocus = (e: FocusEvent<HTMLInputElement>) => {
+    triggerSearch.current = true;
+    setShowDropdown(true);
     const value = e.target.value.trim();
     setInputValue(value);
   }
@@ -103,7 +113,7 @@ const AutoComplete: FC<AutoCompleteProps> = props => {
 
   const generateDropdown = () => {
     return (
-      <ul>
+      <ul style={{ display: showDropdown ? '' : 'none' }}>
         {
           suggestions.map((item, index) => {
             const itemClasses = classnames('suggestion-item', { 'hightLight-item': index === highLightIndex })
@@ -118,11 +128,9 @@ const AutoComplete: FC<AutoCompleteProps> = props => {
 
   return (
     <div className='man-autoComplete' ref={autoCompleteRef}>
-      <Input onChange={handleChange} value={inputValue} onKeyDown={handleKeyDown} />
-
+      <Input onChange={handleChange} onFocus={handleFocus} value={inputValue} onKeyDown={handleKeyDown} {...restProps} disabled={disabled} />
       {uploading && <Icon icon='spinner' spin={true} />}
       {suggestions.length > 0 && generateDropdown()}
-
     </div>
   )
 }

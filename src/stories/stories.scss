@@ -2,4 +2,21 @@
   .btn:not(:first-child) {
     margin-left: 20px;
   }
+
+  .list-type {
+    margin: 50px 0 20px;
+  }
+}
+
+.input-story {
+  width: 400px;
+
+}
+
+.item-description {
+  margin-bottom: 10px;
+
+  &:not(:first-child) {
+    margin-top: 50px;
+  }
 }

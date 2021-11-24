@@ -5,6 +5,7 @@ export type ButtonSize = 'lg' | 'sm'
 
 export type ButtonType = 'primary' | 'default' | 'danger' | 'link'
 interface BaseButtonProps {
+  /**添加class */
   className?: string,
   disabled?: boolean,
   size?: ButtonSize,

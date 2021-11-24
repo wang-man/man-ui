@@ -9,6 +9,7 @@ export default {
   title: '通用/Button',
   component: Button,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
+  // 下面的配置并不必须，如果此组件在其props的types中自己做过注释也在这里生效（如果是联合类型却不会生效）
   argTypes: {
     btnType: {
       name: 'btnType',
@@ -21,9 +22,7 @@ export default {
         },
         defaultValue: { summary: 'default' },
       },
-      control: {
-        type: null
-      }
+      control: null
     },
     backgroundColor: {
       name: 'backgroundColor',
@@ -33,14 +32,13 @@ export default {
         type: {
           summary: 'string'
         },
-        // defaultValue: { summary: 'default' },
       },
-      control: 'color'
+      control: null,
+
     },
     disabled: {
-      // defaultValue: false,
       description: '是否禁用状态',
-      control: 'boolean',
+      control: null,
       table: {
         type: { summary: 'bool' },
         defaultValue: { summary: 'false' },
@@ -48,20 +46,30 @@ export default {
     },
     size: {
       options: ['lg', 'sm'],
-      control: { type: 'radio' }
+      description: '尺寸大小',
+      table: {
+        type: { summary: 'lg | sm' },
+      },
+      control: { type: null }
     },
     href: {
       name: 'href',
       type: { name: 'string' },
-      description: 'demo description',
+      description: '链接按钮的链接地址',
       table: {
         type: { summary: 'string' },
       },
-      control: {
-        type: null
-      }
+      control: null
+    },
+    className: {
+      name: 'className',
+      type: { name: 'string' },
+      description: '按钮class',
+      table: {
+        type: { summary: 'string' },
+      },
+      control: null
     }
-
   },
 } as ComponentMeta<typeof Button>;
 
@@ -75,15 +83,10 @@ const Template: ComponentStory<typeof Button> = (args: CombineButtonProps) => {
   </div>
 }
 
-// 下列所有export第一个为该组件主体描述部分的值，下面的则展示部分差异性的内容
+// 下列所有export中第一个为该组件storybook主体展示的内容，后面的则分别展示剩下的内容
 export const Primary = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
-  btnType: '',
-  className: '',
-  size: '',
-  disabled: false,
-  href: ''
 };
 
 export const Large = Template.bind({});

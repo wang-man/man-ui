@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Button from './components/Button';
 import Transition from './components/Transition';
-
+import Icon from './components/Icon'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 
@@ -19,6 +19,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <header className="App-header">
+        <Icon icon='coffee' />
         <Button autoFocus={true}>Hello</Button>
         <Button btnType={'primary'} size={'lg'} onClick={(e: any) => { e.preventDefault(); alert(123) }}>Hello</Button>
         <Button btnType={'danger'} size={'sm'}>Hello</Button>

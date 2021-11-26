@@ -8,9 +8,11 @@
   box-shadow: $menu-box-shadow;
 
   >.man-menu-item {
+    margin: 0;
     padding: $menu-item-padding-y $menu-item-padding-x;
     cursor: pointer;
     transition: $menu-transition;
+
 
     &:hover,
     &:focus {
@@ -25,7 +27,7 @@
 
     &.is-active {
       color: $menu-item-active-color;
-      border-bottom: $menu-item-active-border-width solid $menu-item-active-color;
+      border-bottom-color: $menu-item-active-color;
     }
 
     &:hover {
@@ -39,12 +41,16 @@
     .submenu-title {
       display: flex;
       align-items: center;
+
+      &.is-vertical {
+        justify-content: space-between;
+      }
     }
 
     .chevron-icon {
       transition: transform .25s ease-in-out;
-      margin-left: 3px;
-      margin-top: 3px;
+      margin-left: 20px;
+      margin-top: 2px;
     }
 
     &:hover {
@@ -68,12 +74,14 @@
 
   .man-submenu {
     // display: none;
+    margin: 0;
     list-style: none;
     padding-left: 0;
     white-space: nowrap;
 
     //transition: $menu-transition;
     .man-menu-item {
+      margin: $menu-item-padding-y 0;
       padding: $menu-item-padding-y $menu-item-padding-x;
       cursor: pointer;
       transition: $menu-transition;
@@ -85,11 +93,6 @@
       }
     }
   }
-
-  .man-submenu.menu-opened {
-    // display: block;
-  }
-
 
   /*入场动画开始*/
   .fade-enter {
@@ -136,19 +139,28 @@
 }
 
 .man-menu-horizontal {
+  line-height: 46px;
+
   >.menu-item {
     border-bottom: $menu-item-active-border-width solid transparent;
   }
 
   .man-submenu {
+    width: 100%;
     position: absolute;
     background: $white;
     z-index: 100;
     top: 100%;
     left: 0;
+    margin-top: 3px;
     border: $menu-border-width solid $menu-border-color;
     box-shadow: $submenu-box-shadow;
   }
+
+  .man-menu-item {
+    border-bottom: $menu-item-active-border-width solid transparent;
+  }
+
 }
 
 .man-menu-vertical {
@@ -157,8 +169,29 @@
   margin: 10px 20px;
   border-right: $menu-border-width solid $menu-border-color;
 
+  .man-submenu {
+
+    &.menu-opened {
+      margin-top: 20px;
+    }
+
+    .man-menu-item {
+      margin: 0.5rem 0;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+    }
+  }
+
   >.man-menu-item {
+    margin: 0.5rem 0;
     border-left: $menu-item-active-border-width solid transparent;
+
+    &.submenu-item {
+      border-left: none;
+    }
 
     &.is-active {
       border-bottom: 0px;
@@ -166,6 +199,7 @@
     }
 
     .man-menu-item {
+      border-left: $menu-item-active-border-width solid transparent;
 
       &.is-active {
         border-left: $menu-item-active-border-width solid $menu-item-active-color;

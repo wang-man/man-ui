@@ -14,20 +14,36 @@ export interface UploadFile {
   error?: any;
 }
 export interface UploadProps {
+  /**上传地址 */
   action: string;
+  /**默认已经上传的文件列表 */
   defaultFileList?: UploadFile[];
+  /**上传文件之前的钩子，参数为上传的文件，若返回 false 则停止上传。支持返回一个 Promise 对象，Promise 对象 reject 时则停止上传，resolve 时开始上传 */
   beforeUpload?: (file: File) => boolean | Promise<File>;
+  /**上传中的回调 */
   onProgress?: (percentage: number, file: File) => void;
+  /**上传成功后的回调 */
   onSuccess?: (data: any, file: File) => void;
+  /**上传出错钩子的回调 */
   onError?: (err: any, file: File) => void;
+  /**文件上传后(成功或失败)的回调 */
   onChange?: (file: File) => void;
+  /**文件删除后的回调 */
   onRemove?: (file: UploadFile) => void;
+  /**设置上传的请求头部 */
   headers?: { [key: string]: any };
+  /**上传的文件的名字，默认为file */
   name?: string;
+  /**上传所需额外参数 */
   data?: { [key: string]: any };
+  /**跨域请求是否提供凭据信息(cookie、HTTP认证及客户端SSL证明等)
+   也可以简单的理解为，当前请求为跨域类型时是否在请求中协带cookie。 */
   withCredentials?: boolean;
+  /**接受上传的文件类型，详见 input accept Attribute */
   accept?: string;
+  /**是否支持多选文件 */
   multiple?: boolean;
+  /**是否可拖拽上传 */
   drag?: boolean;
 }
 

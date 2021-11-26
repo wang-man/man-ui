@@ -5,7 +5,7 @@ import { CSSTransitionProps } from 'react-transition-group/CSSTransition';
 // 动效名称，可作为className使用
 type AnimationName = 'zoom-in-top' | 'zoom-in-left' | 'zoom-in-bottom' | 'zoom-in-right'
 
-type TransitionProps = CSSTransitionProps & {
+export type TransitionProps = CSSTransitionProps & {
   animation?: AnimationName
 }
 

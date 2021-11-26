@@ -24,7 +24,9 @@ const MenuItem: React.FC<MenuItemProps> = (props) => {
 
   return (
     <li className={classes} style={style} onClick={itemClick}>
-      {children}
+      <span className='man-menu-content'>
+        {children}
+      </span>
     </li >
   )
 }

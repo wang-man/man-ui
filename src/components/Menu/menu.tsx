@@ -1,15 +1,17 @@
+import React, { FC, ReactNode, CSSProperties, useState, createContext } from 'react';
 import classnames from 'classnames';
-import * as React from 'react';
-import { useState, createContext } from 'react';
 import { MenuItemProps } from './menuItem'
 type MenuMode = 'horizontal' | 'vertical';
 
 export interface MenuProps {
+  /**默认被选中项 */
   defaultIndex?: string;
+  /**class */
   className?: string;
+  /**菜单模式 */
   mode?: MenuMode;
-  children: React.ReactNode;
-  style?: React.CSSProperties;
+  children: ReactNode;
+  style?: CSSProperties;
   onSelect?: (selectedIndex: string) => void
 }
 
@@ -20,7 +22,18 @@ interface MenuContextProps {
 }
 export const MenuContext = createContext<MenuContextProps>({ activeIndex: '0' });  // 创建的context为一个对象，有一个默认初始index为0 
 
-const Menu: React.FC<MenuProps> = (props) => {
+
+/**
+ * Input 输入框 通过鼠标或键盘输入内容，是最基础的表单域的包装。
+ * 
+ * ~~~js
+ * // 这样引用
+ * import { Input } from 'man-ui'
+ * ~~~
+ * 支持 HTMLInput 的所有基本属性
+ */
+
+const Menu: FC<MenuProps> = (props) => {
   const { defaultIndex, className, mode, onSelect, children, style } = props;
   const [activeIndex, setActive] = useState(defaultIndex);
 
@@ -62,10 +75,10 @@ const Menu: React.FC<MenuProps> = (props) => {
   )
 }
 
-Menu.defaultProps = {
-  defaultIndex: '0',
-  mode: 'horizontal'
-}
+// Menu.defaultProps = {
+//   defaultIndex: '0',
+//   mode: 'horizontal'
+// }
 
 
 export default Menu;

@@ -76,30 +76,26 @@ export default {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof Button> = (args: CombineButtonProps) => {
   return <div className='button-story'>
+    <div className='item-description'>标准默认：</div>
     <Button {...args} btnType='default'>default</Button>
     <Button {...args} btnType='primary'>primary</Button>
     <Button {...args} btnType='danger'>danger</Button>
     <Button {...args} btnType='link' href='https://storybook.js.org/'>link</Button>
+
+    <div className='item-description'>不同尺寸：</div>
+    <Button {...args} btnType='primary' size='lg'>大尺寸</Button>
+    <Button {...args} btnType='primary' size='sm'>小尺寸</Button>
+
+    <div className='item-description'>不可用：</div>
+    <Button {...args} btnType='default' disabled={true}>default</Button>
+    <Button {...args} btnType='primary' disabled={true}>primary</Button>
+    <Button {...args} btnType='danger' disabled={true}>danger</Button>
+    <Button {...args} btnType='link' href='https://storybook.js.org/' disabled={true}>link</Button>
   </div>
 }
 
 // 下列所有export中第一个为该组件storybook主体展示的内容，后面的则分别展示剩下的内容
-export const Primary = Template.bind({});
+export const button = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Primary.args = {
-};
-
-export const Large = Template.bind({});
-Large.args = {
-  size: 'lg'
-};
-
-export const Small = Template.bind({});
-Small.args = {
-  size: 'sm'
-};
-
-export const Disabled = Template.bind({});
-Disabled.args = {
-  disabled: true
+button.args = {
 };

@@ -1,5 +1,4 @@
 import React, { useState, useContext, FunctionComponentElement } from 'react'
-import { CSSTransition } from 'react-transition-group'
 import classnames from 'classnames';
 import { MenuContext } from './menu'
 import { MenuItemProps } from './menuItem';
@@ -18,8 +17,11 @@ const SubMenu: React.FC<SubMenuProps> = (props: SubMenuProps) => {
   const [openFlag, setOpenFlag] = useState(false);
   const context = useContext(MenuContext);
   const classes = classnames('man-menu-item submenu-item', className, {
-    'is-active': context.activeIndex === index
+    'is-active': context.activeIndex.split('_')[0] === index && context.mode === 'horizontal'
   })
+
+  console.log(context)
+  console.log(index)
 
   const handleClick = (e: React.MouseEvent) => {
     setOpenFlag(!openFlag);
@@ -51,7 +53,7 @@ const SubMenu: React.FC<SubMenuProps> = (props: SubMenuProps) => {
     return (
       <Transtion
         in={openFlag}
-        timeout={300}
+        timeout={100}
         classNames='zoom-in-top'
       >
         <ul className={itemClasses} >
@@ -68,7 +70,10 @@ const SubMenu: React.FC<SubMenuProps> = (props: SubMenuProps) => {
   return (
     <li className={classes} {...mouseHandles}>
       <div className={titleClasses} {...clickHandles}>
-        {title}<Icon icon='chevron-down' className='chevron-icon' />
+        <span className='submenu-title-content'>
+          {title}
+        </span>
+        <Icon icon='chevron-down' className='chevron-icon' />
       </div>
       {renderChildren()}
     </li>

@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 library.add(fas);
-import Input, { InputSize, InputProps } from '../components/Input/input';
+import Input, { InputProps } from '../components/Input/input';
 import './stories.scss'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export

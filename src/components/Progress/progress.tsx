@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import { ThemeTypes } from '../Icon/icon'
 export interface ProgressProps {
+  /**是否禁用 Input */
   percent: number;
   strokeHeight?: number;
   showText?: boolean;
@@ -17,10 +18,10 @@ const Progress: FC<ProgressProps> = (props) => {
     theme,
   } = props
   return (
-    <div className="viking-progress-bar" style={styles}>
-      <div className="viking-progress-bar-outer" style={{ height: `${strokeHeight}px` }}>
+    <div className="man-progress-bar" style={styles}>
+      <div className="man-progress-bar-outer" style={{ height: `${strokeHeight}px` }}>
         <div
-          className={`viking-progress-bar-inner color-${theme}`}
+          className={`man-progress-bar-inner color-${theme}`}
           style={{ width: `${percent}%` }}
         >
           {showText && <span className="inner-text">{`${percent}%`}</span>}

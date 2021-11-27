@@ -2,8 +2,8 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
-library.add(fas);
 import AutoComplete, { DataSourceObject } from '../components/AutoComplete/autoComplete';
+library.add(fas);
 
 export default {
   title: 'Form/Autocomplete',   // 此处的story名称和底部export的如果一致，那么在文档中不会显示子菜单

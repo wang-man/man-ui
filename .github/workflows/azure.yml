@@ -16,7 +16,7 @@ jobs:
         npm install
         npm run-script build
     - name: Deploy
-      uses: wang-man/github-pages-deploy-action@releases/v1
+      uses: wang-man/man-ui@releases/v1
       with:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         BRANCH: gh-pages

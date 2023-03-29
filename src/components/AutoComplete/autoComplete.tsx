@@ -56,6 +56,7 @@ const AutoComplete: FC<AutoCompleteProps> = props => {
       setSuggestions([]);
     }
     setUploading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounceValue])
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

@@ -17,6 +17,7 @@ const FormItem: FC<FormItemProps> = (props) => {
   const { dispatch, fields } = useContext(FormContext)
   useEffect(() => {
     dispatch({ type: 'addField', name, value: { label, name } })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   // 获取store对应的value
   const fieldState = fields[name]

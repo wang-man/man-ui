@@ -1,0 +1,19 @@
+.man-form {
+  .man-form-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+
+    .man-form-item-label {
+      flex-basis: 30%;
+    }
+
+    .man-form-item-content {
+      flex-basis: 70%;
+    }
+
+    &.man-form-item-no-label {
+      flex-direction: row-reverse;
+    }
+  }
+}

@@ -17,7 +17,7 @@ export default {
 const Template: ComponentStory<typeof Form> = (args: FormProps) => {
 
   return <div className='form-story' style={{ width: '30em' }}>
-    <Form>
+    <Form initialValues={{ usename: 'man', agreement: true }}>
       <Item label='用户名' name='usename'>
         <Input />
       </Item>

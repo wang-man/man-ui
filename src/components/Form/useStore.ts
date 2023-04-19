@@ -22,7 +22,7 @@ export interface FieldsAction {
   value: any;
 }
 
-function fieldReducer(state: FieldsState, action: FieldsAction): FieldsState {
+function fieldsReducer(state: FieldsState, action: FieldsAction): FieldsState {
   switch (action.type) {
     case 'addField':
       return {
@@ -41,7 +41,7 @@ function fieldReducer(state: FieldsState, action: FieldsAction): FieldsState {
 
 function useStore() {
   const [form, setForm] = useState<FormState>({ isValid: true })
-  const [fields, dispatch] = useReducer(fieldReducer, {})
+  const [fields, dispatch] = useReducer(fieldsReducer, {})
   return {
     fields,
     dispatch,

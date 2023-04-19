@@ -4,19 +4,20 @@ import useStore from './useStore';
 
 export interface FormProps {
   name?: string;
+  initialValues?: Record<string, any>;
   className?: string;
   children: ReactNode
 }
-// 这里也可以直接写成IFormContext = dispatch，但使用ReturnType从我们自定义的useStore中获取类型更为严谨
-export type IFormContext = Pick<ReturnType<typeof useStore>, 'dispatch' | 'fields'>;
+// 这里也可以直接写成 IFormContext = dispatch ，但使用 ReturnType 从我们自定义的useStore中获取类型更为严谨
+export type IFormContext = Pick<ReturnType<typeof useStore>, 'dispatch' | 'fields'> & Pick<FormProps, 'initialValues'>;
 export const FormContext = createContext<IFormContext>({} as IFormContext);
 
 const FormItem: FC<FormProps> = (props) => {
-  const { name, className, children } = props;
+  const { name, className, children, initialValues } = props;
   const classes = classNames('man-form', className);
   const { form, fields, dispatch } = useStore();
   const passedContext: IFormContext = {
-    dispatch, fields
+    dispatch, fields, initialValues
   }
   return (
     <>

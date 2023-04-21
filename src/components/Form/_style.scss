@@ -6,10 +6,38 @@
 
     .man-form-item-label {
       flex-basis: 30%;
+
+      &.man-form-item-label-required {
+        &::before {
+          content: '*';
+          color: $danger;
+          margin-right: 4px;
+          vertical-align: middle;
+        }
+      }
     }
 
-    .man-form-item-content {
+    .man-form-item-control {
       flex-basis: 70%;
+      position: relative;
+    }
+
+    &.man-form-item-has-error {
+      .man-item-explain {
+        position: absolute;
+        line-height: 1.4;
+        left: 0;
+        top: 100%;
+        color: $danger;
+      }
+
+      .man-input-inner {
+        border-color: $danger;
+
+        &:focus {
+          box-shadow: 0 0 0 2px rgba($orange, 0.2);
+        }
+      }
     }
 
     &.man-form-item-no-label {

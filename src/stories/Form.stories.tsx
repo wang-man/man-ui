@@ -18,11 +18,11 @@ const Template: ComponentStory<typeof Form> = (args: FormProps) => {
 
   return <div className='form-story' style={{ width: '30em' }}>
     <Form initialValues={{ usename: 'man', agreement: true }}>
-      <Item label='用户名' name='usename'>
+      <Item label='用户名' name='usename' rules={[{ type: 'email', required: true }]}>
         <Input />
       </Item>
-      <Item label='密码' name='password'>
-        <Input type='password' />
+      <Item label='密码' name='password' rules={[{ type: 'string', required: true, min: 6, max: 10 }]}>
+        <input type='password' />
       </Item>
       <Item name='someText' >
         <Input placeholder='no-label' />

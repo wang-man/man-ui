@@ -1,10 +1,13 @@
 import { useReducer, useState } from 'react';
 import Schema, { RuleItem, ValidateError } from 'async-validator';
 
+export type CustomRuleFun = (getFieldValue: (key: string) => string) => RuleItem
+export type CustomRule = RuleItem | CustomRuleFun
+
 export interface FieldDetail {
   name: string;
   value: string;
-  rules: RuleItem[];
+  rules: CustomRule[];
   isValid: boolean;
   errors: ValidateError[]
 }
@@ -50,10 +53,23 @@ function fieldsReducer(state: FieldsState, action: FieldsAction): FieldsState {
 function useStore() {
   const [form, setForm] = useState<FormState>({ isValid: true })
   const [fields, dispatch] = useReducer(fieldsReducer, {})
+  const getFieldValue = (key: string) => {
+    return fields[key] && fields[key].value
+  }
+  const transformRules = (rules: CustomRule[]) => {
+    return rules.map(rule => {
+      if (typeof rule === 'function') {
+        const calledRule = rule(getFieldValue)
+        return calledRule
+      }
+      return rule
+    })
+  }
   const validateField = async (name: string) => {
     const { value, rules } = fields[name]
+    const afterRules = transformRules(rules)
     const descriptor = {
-      [name]: rules
+      [name]: afterRules
     }
     const valueMap = {
       [name]: value

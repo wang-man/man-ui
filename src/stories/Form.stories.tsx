@@ -1,9 +1,12 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+
 import Form, { FormProps } from '../components/Form/form';
 import Item from '../components/Form/formItem';
 import Input from '../components/Input'
 import Button from '../components/Button/button'
+import { CustomRule } from '../components/Form/useStore';
+
 
 export default {
   title: 'Form/Form',   // 此处的story名称和底部export的如果一致，那么在文档中不会显示子菜单
@@ -13,6 +16,18 @@ export default {
   },
 } as ComponentMeta<typeof Form>;
 
+const confirmRules: CustomRule[] = [
+  { type: 'string', required: true, min: 3, max: 8 },
+  (getFieldValue) => ({
+    asyncValidator(rule, value) {
+      if (value !== getFieldValue('password')) {
+        return Promise.reject('两次密码不一致')
+      }
+      return Promise.resolve()
+    }
+  })
+]
+
 
 const Template: ComponentStory<typeof Form> = (args: FormProps) => {
 
@@ -21,8 +36,11 @@ const Template: ComponentStory<typeof Form> = (args: FormProps) => {
       <Item label='用户名' name='usename' rules={[{ type: 'email', required: true }]}>
         <Input />
       </Item>
-      <Item label='密码' name='password' rules={[{ type: 'string', required: true, min: 6, max: 10 }]}>
-        <input type='password' />
+      <Item label='密码' name='password' rules={[{ type: 'string', required: true, min: 3, max: 8 }]}>
+        <Input type='password' />
+      </Item>
+      <Item label='确认密码' name='confirmPassword' rules={confirmRules}>
+        <Input type='password' />
       </Item>
       <Item name='someText' >
         <Input placeholder='no-label' />

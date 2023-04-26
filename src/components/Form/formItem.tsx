@@ -1,6 +1,6 @@
 import React, { FC, ReactNode, useEffect, useContext } from 'react'
 import classNames from 'classnames'
-import { RuleItem } from 'async-validator';
+import { CustomRule } from './useStore';
 
 import { FormContext } from './form';
 
@@ -9,7 +9,7 @@ export interface FormItemProps {
   label?: string;
   className?: string;
   children: ReactNode;
-  rules?: RuleItem[];
+  rules?: CustomRule[];
   validateTrigger?: string
 }
 
@@ -73,7 +73,7 @@ const FormItem: FC<FormItemProps> = (props) => {
   }
 
   const errors = fieldState?.errors
-  const isRequired = fieldState?.rules?.some(rule => rule.required)
+  const isRequired = fieldState?.rules?.some(rule => typeof rule !== 'function' && rule.required)
   const hasError = errors?.length > 0
   const labelClass = classNames('man-form-item-label', { 'man-form-item-label-required': isRequired })
   const controlClass = classNames('man-form-item-control', {})

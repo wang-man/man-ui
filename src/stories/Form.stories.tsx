@@ -46,10 +46,9 @@ const Template: ComponentStory<typeof Form> = (args: FormProps) => {
         <Input placeholder='no-label' />
       </Item>
       <div className='agreement-section' >
-        <Item name='agreement'>
-          <input type="checkbox" />
+        <Item name='agreement' rules={[{ type: 'enum', enum: [true], message: '请先同意此协议' }]}>
+          <Input type="checkbox" append={<span>是否同意用户协议<a href="http://">用户协议</a></span>} />
         </Item>
-        <span>是否同意用户协议<a href="http://">用户协议</a></span>
       </div>
       <div className='agreement-section'>
         <Button btnType='danger' type='submit'>提交</Button>

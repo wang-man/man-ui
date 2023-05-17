@@ -28,7 +28,7 @@ const FormItem: FC<FormItemProps> = (props) => {
   const fieldState = fields[name]
   // console.log('fieldState', fieldState)
   const value = (fieldState && fieldState.value) || ''
-  let valueProp = 'value', trigger = 'onChange';
+  let valuePropName = 'value', trigger = 'onChange';
 
   // 1. 获取children数组第一个元素（第一个元素视为输入元素）
   const childList = React.Children.toArray(children)
@@ -47,7 +47,7 @@ const FormItem: FC<FormItemProps> = (props) => {
   }
   // 适应不同的事件以及 value 属性名称
   if (child.type === "input" && child.props.type === 'checkbox') {
-    valueProp = 'checked'
+    valuePropName = 'checked'
   }
 
   const onValueUpdate = (e: any) => {
@@ -62,7 +62,7 @@ const FormItem: FC<FormItemProps> = (props) => {
   // 以下是表单数据受控处理关键-------------------
   // 2. 手动创建一个属性列表，需要value以及onChange属性。如此实现表单输入实时显示
   const controlProps: Record<string, any> = {}
-  controlProps[valueProp] = value      // value属性受控
+  controlProps[valuePropName] = value      // value属性受控
   controlProps[trigger] = onValueUpdate
 
   const onValueValidate = async () => {

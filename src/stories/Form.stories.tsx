@@ -5,7 +5,7 @@ import Form, { FormProps } from '../components/Form/form';
 import Item from '../components/Form/formItem';
 import Input from '../components/Input'
 import Button from '../components/Button/button'
-import { CustomRule } from '../components/Form/useStore';
+import { ValidateRule } from '../components/Form/useStore';
 
 
 export default {
@@ -16,7 +16,7 @@ export default {
   },
 } as ComponentMeta<typeof Form>;
 
-const confirmRules: CustomRule[] = [
+const confirmRules: ValidateRule[] = [
   { type: 'string', required: true, min: 3, max: 8 },
   (getFieldValue) => ({
     asyncValidator(rule, value) {
@@ -31,8 +31,8 @@ const confirmRules: CustomRule[] = [
 
 const Template: ComponentStory<typeof Form> = (args: FormProps) => {
 
-  return <div className='form-story' style={{ width: '30em' }}>
-    <Form initialValues={{ usename: 'man', agreement: true }}>
+  return <div className='form-story'>
+    <Form initialValues={{ usename: 'man', agreement: true }} {...args}>
       <Item label='用户名' name='usename' rules={[{ type: 'email', required: true }]}>
         <Input />
       </Item>
@@ -52,7 +52,7 @@ const Template: ComponentStory<typeof Form> = (args: FormProps) => {
         <span>是否同意用户协议<a href="http://">用户协议</a></span>
       </div>
       <div className='agreement-section'>
-        <Button btnType='danger'>提交</Button>
+        <Button btnType='danger' type='submit'>提交</Button>
       </div>
     </Form>
   </div>

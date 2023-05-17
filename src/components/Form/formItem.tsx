@@ -1,6 +1,6 @@
 import React, { FC, ReactNode, useEffect, useContext } from 'react'
 import classNames from 'classnames'
-import { CustomRule } from './useStore';
+import { ValidateRule } from './useStore';
 
 import { FormContext } from './form';
 
@@ -9,7 +9,7 @@ export interface FormItemProps {
   label?: string;
   className?: string;
   children: ReactNode;
-  rules?: CustomRule[];
+  rules?: ValidateRule[];
   validateTrigger?: string
 }
 
@@ -18,14 +18,15 @@ const FormItem: FC<FormItemProps> = (props) => {
   const { label, className, children, name, rules, validateTrigger } = props;
 
   const { dispatch, fields, initialValues, validateField } = useContext(FormContext)
+
   useEffect(() => {
     const value = (initialValues && initialValues[name]) || '';
-    dispatch({ type: 'addField', name, value: { label, name, value, rules } })
+    dispatch({ type: 'addField', name, value: { label, name, value, rules: rules || [], errors: [], isValid: true } })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   // 获取store对应的value
   const fieldState = fields[name]
-  console.log('fieldState', fieldState)
+  // console.log('fieldState', fieldState)
   const value = (fieldState && fieldState.value) || ''
   let valueProp = 'value', trigger = 'onChange';
 

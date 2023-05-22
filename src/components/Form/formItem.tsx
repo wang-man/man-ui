@@ -57,7 +57,7 @@ const FormItem: FC<FormItemProps> = (props) => {
     await dispatch({ type: 'updateValue', name, value })
 
     if (trigger === validateTrigger) {  // 如果校验跟事件共用同一个触发动作，validateField中无法及时获取最新value，所以这里来传入
-      onValueValidate(value)
+      validateField(value, name)
     }
   }
   // 以下是表单数据受控处理关键-------------------
@@ -66,7 +66,12 @@ const FormItem: FC<FormItemProps> = (props) => {
   controlProps[valuePropName] = value      // value属性受控
   controlProps[trigger] = onValueUpdate
 
-  const onValueValidate = (value: any) => {
+  const onValueValidate = (e: any) => {
+    let value = e.target.value
+    // 适应不同的事件以及value 属性名称
+    if (e.target.nodeName === "INPUT" && e.target.type === 'checkbox') {
+      value = e.target.checked
+    }
     validateField(value, name)
   }
 

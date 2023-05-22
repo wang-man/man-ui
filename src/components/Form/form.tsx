@@ -1,13 +1,15 @@
 import React, { FC, ReactNode, createContext } from 'react'
 import classNames from 'classnames'
 import { ValidateError } from 'async-validator';
-import useStore from './useStore';
+import useStore, { FormState } from './useStore';
+
+type RenderProps = (form: FormState) => ReactNode
 
 export interface FormProps {
   name?: string;
   initialValues?: Record<string, any>;
   className?: string;
-  children: ReactNode
+  children: ReactNode | RenderProps
   onFinish?: (values: Record<string, any>) => void
   onFinishFaild?: (values: Record<string, any>, errors: Record<string, ValidateError[]>) => void
 }
@@ -35,19 +37,27 @@ const Form: FC<FormProps> = (props) => {
       }
     })
   }
+
+  // renderProps是react官网推荐的一个设计模式，通常是一个函数属性，函数中可以灵活的传入各种组件/节点，函数参数又可用于节点中。整体类似vue中插槽的功能，非常值得学习。
+  let chidldrenNode: ReactNode = null
+  if (typeof children === 'function') {
+    chidldrenNode = children(form)
+  } else {
+    chidldrenNode = children
+  }
   return (
     <>
       <form className={classes} name={name} onSubmit={submitForm}>
         <FormContext.Provider value={context}>
-          {children}
+          {chidldrenNode}
         </FormContext.Provider>
       </form>
-      <div>
+      {/* <div>
         <code style={{ whiteSpace: 'pre-wrap' }}>{JSON.stringify(fields)}</code>
       </div>
       <div>
         <code style={{ whiteSpace: 'pre-wrap' }}>{JSON.stringify(form)}</code>
-      </div>
+      </div> */}
     </>
   )
 }

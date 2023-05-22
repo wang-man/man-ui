@@ -32,11 +32,11 @@ const confirmRules: ValidateRule[] = [
 const Template: ComponentStory<typeof Form> = (args: FormProps) => {
 
   return <div className='form-story'>
-    <Form initialValues={{ usename: 'man', agreement: true }} {...args}>
-      <Item label='用户名' name='usename' rules={[{ type: 'email', required: true }]}>
+    <Form initialValues={{ usename: 'man' }} {...args}>
+      <Item label='用户名' name='usename' rules={[{ type: 'email', required: true }]} validateTrigger='onChange'>
         <Input />
       </Item>
-      <Item label='密码' name='password' rules={[{ type: 'string', required: true, min: 3, max: 8 }]}>
+      <Item label='密码' name='password' rules={[{ type: 'string', required: true, min: 3, max: 8 }]} >
         <Input type='password' />
       </Item>
       <Item label='确认密码' name='confirmPassword' rules={confirmRules}>
@@ -45,11 +45,9 @@ const Template: ComponentStory<typeof Form> = (args: FormProps) => {
       <Item name='someText' >
         <Input placeholder='no-label' />
       </Item>
-      <div className='agreement-section' >
-        <Item name='agreement' rules={[{ type: 'enum', enum: [true], message: '请先同意此协议' }]}>
-          <Input type="checkbox" append={<span>是否同意用户协议<a href="http://">用户协议</a></span>} />
-        </Item>
-      </div>
+      <Item name='agreement' rules={[{ type: 'enum', enum: [true], message: '请先同意此协议' }]} validateTrigger='onChange'>
+        <input type='checkbox' />是否同意用户协议 < a href="http://">用户协议</a>
+      </Item>
       <div className='agreement-section'>
         <Button btnType='danger' type='submit'>提交</Button>
       </div>

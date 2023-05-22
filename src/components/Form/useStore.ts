@@ -68,8 +68,8 @@ function useStore() {
       return rule
     })
   }
-  const validateField = (name: string) => {
-    const { value, rules } = fields[name]
+  const validateField = (value: any, name: string) => {
+    const { rules } = fields[name]
     const afterRules = transformRules(rules)
     const descriptor = {
       [name]: afterRules
@@ -81,16 +81,14 @@ function useStore() {
 
     let isValid = true;
     let errors: ValidateError[] = []
-
-    validator.validate(valueMap).then(() => {
-    }).catch(({ errors: errs, fields }) => {
+    validator.validate(valueMap).then((fields) => {
+      dispatch({ type: 'updateValidateResult', name, value: { isValid, errors } })
+    }).catch(({ errors: errs }) => {
       console.log(errs)
-      console.log(fields)
       isValid = false
       errors = errs
-    }).finally(() => {
       dispatch({ type: 'updateValidateResult', name, value: { isValid, errors } })
-    });
+    })
   }
 
   const validateAllFields = () => {

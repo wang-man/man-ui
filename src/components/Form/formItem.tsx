@@ -26,51 +26,54 @@ const FormItem: FC<FormItemProps> = (props) => {
   }, [])
   // 获取store对应的value
   const fieldState = fields[name]
-  // console.log('fieldState', fieldState)
   const value = (fieldState && fieldState.value) || ''
   let valuePropName = 'value', trigger = 'onChange';
 
   // 1. 获取children数组第一个元素（第一个元素视为输入元素）
   const childList = React.Children.toArray(children)
   const child = childList[0] as React.ReactElement
+  const resetChild = childList.slice(1)
   // todo:判断child的类型，显示警告
   if (childList.length === 0) {
     console.error('Item中缺少子节点')
     return null
   }
-  if (childList.length > 1) {
-    console.warn('Item中不能多余一个子节点')
-  }
+
   if (!React.isValidElement(childList[0])) {
     console.error('Item中不是一个合法的React节点')
     return null
   }
+
   // 适应不同的事件以及 value 属性名称
-  if (child.type === "input" && child.props.type === 'checkbox') {
+  if (child.props.type === 'checkbox') {
     valuePropName = 'checked'
   }
-
-  const onValueUpdate = (e: any) => {
+  const onValueUpdate = async (e: any) => {
     let value = e.target.value
-    console.log(e.target)
     // 适应不同的事件以及value 属性名称
     if (e.target.nodeName === "INPUT" && e.target.type === 'checkbox') {
       value = e.target.checked
     }
-    dispatch({ type: 'updateValue', name, value })
+    await dispatch({ type: 'updateValue', name, value })
+
+    if (trigger === validateTrigger) {  // 如果校验跟事件共用同一个触发动作，validateField中无法及时获取最新value，所以这里来传入
+      onValueValidate(value)
+    }
   }
   // 以下是表单数据受控处理关键-------------------
-  // 2. 手动创建一个属性列表，需要value以及onChange属性。如此实现表单输入实时显示
+  // 2. 手动创建一个属性列表，需要value以及onChange属性。如此实现表单输入实时显示。
   const controlProps: Record<string, any> = {}
   controlProps[valuePropName] = value      // value属性受控
   controlProps[trigger] = onValueUpdate
 
-  const onValueValidate = async () => {
-    await validateField(name)
+  const onValueValidate = (value: any) => {
+    validateField(value, name)
   }
 
   if (rules) {
-    controlProps[validateTrigger!] = onValueValidate
+    if (trigger !== validateTrigger) {
+      controlProps[validateTrigger!] = onValueValidate    // 非空断言，等同于：controlProps!.validateTrigger
+    }
   }
 
   const errors = fieldState?.errors
@@ -86,6 +89,8 @@ const FormItem: FC<FormItemProps> = (props) => {
     { ...child.props, ...controlProps }
   )
 
+  const restChildNode = resetChild ? resetChild.map(item => item) : null
+
   return (
     <div className={itemClass}>
       {
@@ -94,7 +99,7 @@ const FormItem: FC<FormItemProps> = (props) => {
         </div>
       }
       <div className={controlClass}>
-        {returnChildNode}
+        {returnChildNode}{restChildNode}
         {
           hasError &&
           <div className='man-item-explain'>

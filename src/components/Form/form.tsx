@@ -14,6 +14,7 @@ export interface FormProps {
   onFinishFaild?: (values: Record<string, any>, errors: Record<string, ValidateError[]>) => void
 }
 // 这里也可以直接写成 IFormContext: dispatch ，但使用 ReturnType 从我们自定义的useStore中获取类型更为严谨
+// ReturnType用于从一个函数中获取它返回值的类型
 export type IFormContext = Pick<ReturnType<typeof useStore>, 'dispatch' | 'fields' | 'validateField'> & Pick<FormProps, 'initialValues'>;
 export const FormContext = createContext<IFormContext>({} as IFormContext);
 

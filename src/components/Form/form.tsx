@@ -21,7 +21,7 @@ export const FormContext = createContext<IFormContext>({} as IFormContext);
 const Form: FC<FormProps> = (props) => {
   const { name, className, children, initialValues, onFinish, onFinishFaild } = props;
   const classes = classNames('man-form', className);
-  const { form, fields, dispatch, validateField, validateAllFields } = useStore();
+  const { form, fields, dispatch, validateField, validateAllFields } = useStore(initialValues);
   const context: IFormContext = {
     dispatch, fields, initialValues, validateField
   }

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useRef } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Icon from '../components/Icon/icon';
 import Form, { FormProps } from '../components/Form/form';
@@ -34,9 +34,12 @@ const confirmRules: ValidateRule[] = [
 
 
 const Template: ComponentStory<typeof Form> = (args: FormProps) => {
-  console.log('args', args)
+  const ref = useRef<HTMLFormElement>(null) // 如果不赋一个null，下面的ref报红
+  const resetAll = () => {
+    console.log('form', ref.current)
+  }
   return <div className='form-story'>
-    <Form initialValues={{ usename: 'man' }} {...args}>
+    <Form initialValues={{ usename: 'man' }} {...args} ref={ref}>
       <Item label='用户名' name='usename' rules={[{ type: 'email', required: true }]} validateTrigger='onChange'>
         <Input />
       </Item>
@@ -54,10 +57,11 @@ const Template: ComponentStory<typeof Form> = (args: FormProps) => {
       </Item>
       <div className='agreement-section'>
         <Button btnType='danger' type='submit'>提交</Button>
+        <Button type='button' onClick={resetAll}>重置</Button>
       </div>
     </Form>
     <h3>renderProps模式：</h3>
-    <Form initialValues={{ usename: 'man' }} {...args}>
+    <Form initialValues={{ usename: 'man' }} {...args} ref={ref}>
       {
         ({ isSubmitting, isValid }) => {
           return <>

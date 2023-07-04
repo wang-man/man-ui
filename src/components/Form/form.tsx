@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, createContext } from 'react'
+import React, { FC, ReactNode, createContext, forwardRef } from 'react'
 import classNames from 'classnames'
 import { ValidateError } from 'async-validator';
 import useStore, { FormState } from './useStore';
@@ -18,7 +18,7 @@ export interface FormProps {
 export type IFormContext = Pick<ReturnType<typeof useStore>, 'dispatch' | 'fields' | 'validateField'> & Pick<FormProps, 'initialValues'>;
 export const FormContext = createContext<IFormContext>({} as IFormContext);
 
-const Form: FC<FormProps> = (props) => {
+const Form = forwardRef<HTMLFormElement, FormProps>((props, ref) => {
   const { name, className, children, initialValues, onFinish, onFinishFaild } = props;
   const classes = classNames('man-form', className);
   const { form, fields, dispatch, validateField, validateAllFields } = useStore(initialValues);
@@ -46,22 +46,13 @@ const Form: FC<FormProps> = (props) => {
   } else {
     chidldrenNode = children
   }
-  return (
-    <>
-      <form className={classes} name={name} onSubmit={submitForm}>
-        <FormContext.Provider value={context}>
-          {chidldrenNode}
-        </FormContext.Provider>
-      </form>
-      {/* <div>
-        <code style={{ whiteSpace: 'pre-wrap' }}>{JSON.stringify(fields)}</code>
-      </div>
-      <div>
-        <code style={{ whiteSpace: 'pre-wrap' }}>{JSON.stringify(form)}</code>
-      </div> */}
-    </>
-  )
-}
+  return <form className={classes} name={name} onSubmit={submitForm} ref={ref}>
+    <FormContext.Provider value={context}>
+      {chidldrenNode}
+    </FormContext.Provider>
+  </form>
+
+})
 
 Form.defaultProps = {
   name: 'man_form',

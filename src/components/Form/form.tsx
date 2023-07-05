@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, createContext, forwardRef } from 'react'
+import React, { FC, ReactNode, createContext, forwardRef, useImperativeHandle } from 'react'
 import classNames from 'classnames'
 import { ValidateError } from 'async-validator';
 import useStore, { FormState } from './useStore';
@@ -16,12 +16,20 @@ export interface FormProps {
 // 这里也可以直接写成 IFormContext: dispatch ，但使用 ReturnType 从我们自定义的useStore中获取类型更为严谨
 // ReturnType用于从一个函数中获取它返回值的类型
 export type IFormContext = Pick<ReturnType<typeof useStore>, 'dispatch' | 'fields' | 'validateField'> & Pick<FormProps, 'initialValues'>;
+export type IformRef = Omit<ReturnType<typeof useStore>, 'dispatch' | 'fields' | 'form'>
 export const FormContext = createContext<IFormContext>({} as IFormContext);
-
-const Form = forwardRef<HTMLFormElement, FormProps>((props, ref) => {
+// 
+const Form = forwardRef<IformRef, FormProps>((props, ref) => {
   const { name, className, children, initialValues, onFinish, onFinishFaild } = props;
   const classes = classNames('man-form', className);
-  const { form, fields, dispatch, validateField, validateAllFields } = useStore(initialValues);
+  const { form, fields, dispatch, ...restProps } = useStore(initialValues);
+  const { validateField, validateAllFields, } = restProps
+  // 向外暴露方法及属性。使得外部可以使用form组件实例方法
+  useImperativeHandle(ref, () => {
+    return {
+      ...restProps
+    }
+  })
   const context: IFormContext = {
     dispatch, fields, initialValues, validateField
   }
@@ -46,7 +54,7 @@ const Form = forwardRef<HTMLFormElement, FormProps>((props, ref) => {
   } else {
     chidldrenNode = children
   }
-  return <form className={classes} name={name} onSubmit={submitForm} ref={ref}>
+  return <form className={classes} name={name} onSubmit={submitForm}>
     <FormContext.Provider value={context}>
       {chidldrenNode}
     </FormContext.Provider>

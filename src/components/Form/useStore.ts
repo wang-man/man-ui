@@ -68,13 +68,12 @@ function useStore(initialValues?: Record<string, any>) {
     }
   }
   const resetFields = () => {
-    if (initialValues) {
-      forEach(initialValues, (value, name) => {
-        if (fields[name]) {
-          dispatch({ type: 'updateValue', name, value })
-        }
-      })
-    }
+    // 重置：只保留初始化的值
+    forEach(fields, (value, name) => {
+      if (fields[name]) {
+        dispatch({ type: 'updateValue', name, value: initialValues?.[name] })
+      }
+    })
   }
   const transformRules = (rules: ValidateRule[]) => {
     return rules.map(rule => {

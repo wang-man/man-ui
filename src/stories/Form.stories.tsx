@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Icon from '../components/Icon/icon';
-import Form, { FormProps } from '../components/Form/form';
+import Form, { FormProps, IformRef } from '../components/Form/form';
 import Item from '../components/Form/formItem';
 import Input from '../components/Input'
 import Button from '../components/Button/button'
@@ -34,12 +34,14 @@ const confirmRules: ValidateRule[] = [
 
 
 const Template: ComponentStory<typeof Form> = (args: FormProps) => {
-  const ref = useRef<HTMLFormElement>(null) // 如果不赋一个null，下面的ref报红
+  const ref = useRef<IformRef>(null) // 如果不赋一个null，下面的ref报红
+  // 验证form组件实例方法
   const resetAll = () => {
     console.log('form', ref.current)
+    ref.current?.resetFields()
   }
   return <div className='form-story'>
-    <Form initialValues={{ usename: 'man' }} {...args} ref={ref}>
+    <Form  {...args} ref={ref}>
       <Item label='用户名' name='usename' rules={[{ type: 'email', required: true }]} validateTrigger='onChange'>
         <Input />
       </Item>
